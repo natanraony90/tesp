@@ -1,4 +1,4 @@
-package br.unibh;
+package br.unibh.entidades;
 
 import java.util.Date;
 
@@ -8,22 +8,22 @@ public class Aluno extends Pessoa{
 	private Date dataAniversairo;
 	
 	
-	public Aluno(Long matricula, String nome, String cpf, Date dataAniversairo) {
-		super(nome, cpf);
+	public Aluno(Long id, Long matricula, String nome, String cpf, Date dataAniversairo) {
+		super(id, nome, cpf);
 		this.matricula = matricula;
 		this.dataAniversairo = dataAniversairo;
 	}
 	
 		
 	
-	public Aluno(Long matricula, String nome, String cpf) {
-		super(nome, cpf);
+	public Aluno(Long id, Long matricula, String nome, String cpf) {
+		super(id, nome, cpf);
 		this.matricula = matricula;
 	}
 	
 	
-	public Aluno(Long matricula, String nome) {
-		super(nome, null);
+	public Aluno(Long id, Long matricula, String nome) {
+		super(id, nome, null);
 		this.matricula = matricula;
 	}
 
@@ -41,6 +41,19 @@ public class Aluno extends Pessoa{
 	}
 	public void setDataAniversairo(Date dataAniversairo) {
 		this.dataAniversairo = dataAniversairo;
+	}
+	
+	public static boolean verificaMatricula(String matricula){
+		if (matricula == null){
+		return false;
+		} else if (matricula.trim().equals("")){
+			return false;
+		} else if (matricula.length() != 8) {
+			return false;
+			
+		
+		}
+		return true;
 	}
 
 
