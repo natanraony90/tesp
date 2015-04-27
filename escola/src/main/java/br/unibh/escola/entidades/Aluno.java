@@ -4,18 +4,24 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotBlank;
+
 
 	@Entity
-	@Table(name = "TB_ALUNO")
+	@PrimaryKeyJoinColumn
+	@Table(name = "TB_ALUNO", uniqueConstraints = @UniqueConstraint(columnNames = "matricula"))
+	@NamedQueries({ @NamedQuery(name="Aluno.findByName", query = "select a from Aluno a where a.nome like :nome")
+	})
 	public class Aluno extends Pessoa {
 
-	@NotBlank
 	@NotNull
 	@Column(unique = true)
 	private Long matricula;
@@ -24,6 +30,8 @@ import org.hibernate.validator.constraints.NotBlank;
 	@Column(name = "dataAniversairo")
 	@Temporal(value = TemporalType.DATE)
 	private Date dataAniversairo;
+	
+	public Aluno(){}
 
 	public Aluno(Long id, Long matricula, String nome, String cpf,
 			Date dataAniversairo) {
