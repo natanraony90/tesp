@@ -24,7 +24,7 @@
 						<h:inputText id="matricula" value="#{alunomb.aluno.matricula}"
 							size="10" />
 						<h:message for="matricula" errorClass="invalid" />
-						<h:outputLabel value="Data de Aniversário " />
+						<h:outputLabel value="Data de Nascimento " />
 						<rich:calendar id="dataAniversairo"
 							value="#{alunomb.aluno.dataAniversairo}" size="10" popup="true"
 							datePattern="dd/MM/yyyy" />
@@ -37,7 +37,7 @@
 				</rich:panel>
 			</h:form>
 		</h:panelGroup>
-		<rich:panel>
+		<rich:panel rendered="#{empty alunomb.aluno}">
 			<h:outputText value="Lista de Alunos"
 				style="font-size:15px;font-weight:bold" />
 			<h:form id="arg">
@@ -52,6 +52,7 @@
 						<h:commandButton id="pesquisar" action="#{alunomb.pesquisar}"
 							value="Pesquisar" render="tabela" />
 					</rich:toolbarGroup>
+					
 				</rich:toolbar>
 			</h:form>
 			<h:panelGroup rendered="#{empty alunomb.alunoes}">
@@ -87,7 +88,7 @@
 					</rich:column>
 					<rich:column>
 						<f:facet name="header">
-							<h:outputText value="Data Aniversário " />
+							<h:outputText value="Data de Nascimento " />
 						</f:facet>
 						<h:outputText value="#{aluno.dataAniversairo}">
 							<f:convertDateTime pattern="dd/MM/yyyy" />
