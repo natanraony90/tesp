@@ -84,4 +84,38 @@ import javax.validation.constraints.NotNull;
 				+ ", dataAniversairo=" + dataAniversairo + "]";
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((dataAniversairo == null) ? 0 : dataAniversairo.hashCode());
+		result = prime * result
+				+ ((matricula == null) ? 0 : matricula.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Aluno other = (Aluno) obj;
+		if (dataAniversairo == null) {
+			if (other.dataAniversairo != null)
+				return false;
+		} else if (!dataAniversairo.equals(other.dataAniversairo))
+			return false;
+		if (matricula == null) {
+			if (other.matricula != null)
+				return false;
+		} else if (!matricula.equals(other.matricula))
+			return false;
+		return true;
+	}
+	
+	
 }

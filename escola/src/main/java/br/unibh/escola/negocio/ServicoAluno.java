@@ -2,11 +2,14 @@ package br.unibh.escola.negocio;
 
 import java.util.List;
 import java.util.logging.Logger;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+
 import br.unibh.escola.entidades.Aluno;
+import br.unibh.escola.entidades.Disciplina;
 
 	@Stateless
 	@LocalBean
@@ -55,5 +58,17 @@ import br.unibh.escola.entidades.Aluno;
 		log.info("Encontrando alunos " + name);
 		return em.createNamedQuery("Aluno.findByName")
 				.setParameter("nome", name + "%").getResultList();
+	}
+
+	@Override
+	public List<Aluno> findByCapacidade(int capacidade) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Disciplina> findByNomeECurso(String nome, String curso) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

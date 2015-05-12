@@ -6,3 +6,4 @@ INSERT INTO `tb_pessoa`(`id`, `cpf`, `nome`) VALUES (00003,12345543211,'Katia Si
 INSERT INTO `tb_aluno`(`dataAniversairo`, `matricula`, `id`) VALUES ('1990-07-06',12345,00001)
 INSERT INTO `tb_aluno`(`dataAniversairo`, `matricula`, `id`) VALUES ('1989-03-10',54321,00002)
 INSERT INTO `tb_professor`(`salario`, `id`) VALUES (4.500,00003)
+INSERT INTO `tb_sala`(`id`,`PC`,`capacidade`,`codigo`,`dataTerminoManutencao`,`dtShow`,`observacao`,`qBranco`,`status`) VALUES (0,true,30,'AAAAA',null,true,'Sala',true,1)

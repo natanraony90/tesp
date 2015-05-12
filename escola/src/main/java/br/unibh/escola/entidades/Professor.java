@@ -59,4 +59,30 @@ import javax.validation.constraints.NotNull;
 		return super.toString() + "Professor [salario=" + salario + "]";
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((salario == null) ? 0 : salario.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Professor other = (Professor) obj;
+		if (salario == null) {
+			if (other.salario != null)
+				return false;
+		} else if (!salario.equals(other.salario))
+			return false;
+		return true;
+	}
+	
+	
 }
