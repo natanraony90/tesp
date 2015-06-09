@@ -1,19 +1,23 @@
 package br.unibh.escola.entidades;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 
 	@Entity
@@ -25,7 +29,7 @@ import javax.validation.constraints.NotNull;
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotNull
+	@NotBlank
 	@Column(name = "codigo", length = 10, nullable = false, unique = true)
 	private String codigo;
 	
@@ -54,8 +58,8 @@ import javax.validation.constraints.NotNull;
 	@Temporal(value = TemporalType.DATE)
 	private Date dataTerminoManutencao;
 	
-	@Version
-	private int versao;
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="sala")
+	private List<Disciplina> disciplinas;
 	
 	public Sala(){}
 
@@ -131,6 +135,16 @@ import javax.validation.constraints.NotNull;
 	public void setdataTerminoManutencao(Date dataTerminoManutencao) {
 		this.dataTerminoManutencao = dataTerminoManutencao;
 	}
+	
+	
+	public List<Disciplina> getDisciplinas() {
+		return disciplinas;
+	}
+
+
+	public void setDisciplinas(List<Disciplina> disciplinas) {
+		this.disciplinas = disciplinas;
+	}
 
 
 	@Override
@@ -138,8 +152,7 @@ import javax.validation.constraints.NotNull;
 		return "Sala [id=" + id + ", codigo=" + codigo + ", capacidade="
 				+ capacidade + ", qBranco=" + qBranco + ", dtShow=" + dtShow
 				+ ", PC=" + PC + ", observacao=" + observacao + ", status="
-				+ status + ", dataTerminoManutencao=" + dataTerminoManutencao
-				+ "]";
+				+ status + ", dataTerminoManutencao=" + dataTerminoManutencao + "]";
 	}
 
 
@@ -204,9 +217,7 @@ import javax.validation.constraints.NotNull;
 		if (status != other.status)
 			return false;
 		return true;
-	}
-	
-	
+	}	
 	
 	
 }

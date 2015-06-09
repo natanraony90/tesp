@@ -1,9 +1,14 @@
 package br.unibh.escola.entidades;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -13,14 +18,11 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
-
-
-	@Entity
-	@PrimaryKeyJoinColumn
-	@Table(name = "TB_ALUNO", uniqueConstraints = @UniqueConstraint(columnNames = "matricula"))
-	@NamedQueries({ @NamedQuery(name="Aluno.findByName", query = "select a from Aluno a where a.nome like :nome")
-	})
-	public class Aluno extends Pessoa {
+@Entity
+@PrimaryKeyJoinColumn
+@Table(name = "TB_ALUNO", uniqueConstraints = @UniqueConstraint(columnNames = "matricula"))
+@NamedQueries({ @NamedQuery(name = "Aluno.findByName", query = "select a from Aluno a where a.nome like :nome") })
+public class Aluno extends Pessoa {
 
 	@NotNull
 	@Column(unique = true)
@@ -28,10 +30,15 @@ import javax.validation.constraints.NotNull;
 
 	@NotNull
 	@Column(name = "dataAniversairo")
-	@Temporal(value = TemporalType.DATE)
+	@Temporal(TemporalType.DATE)
 	private Date dataAniversairo;
-	
-	public Aluno(){}
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "aluno_disciplina", joinColumns = @JoinColumn(name = "id_aluno"), inverseJoinColumns = @JoinColumn(name = "id_disciplina"))
+	private List<Disciplina> disciplinas;
+
+	public Aluno() {
+	}
 
 	public Aluno(Long id, Long matricula, String nome, String cpf,
 			Date dataAniversairo) {
@@ -116,6 +123,5 @@ import javax.validation.constraints.NotNull;
 			return false;
 		return true;
 	}
-	
-	
+
 }

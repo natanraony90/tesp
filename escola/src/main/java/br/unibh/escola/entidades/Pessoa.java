@@ -8,8 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
-import javax.persistence.Version;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -25,20 +23,15 @@ import org.hibernate.validator.constraints.NotBlank;
 	private Long id;
 	
 	@NotBlank
-	@NotNull
 	@Size(min = 5, max = 100)
 	@Pattern(regexp = "[A-Za-z À-ú ]*", message = "must contain only letters and spaces")
 	@Column(name = "nome", length = 100, nullable = false)
 	private String nome;
 
 	@NotBlank
-	@NotNull
 	@Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")
 	@Column(unique = true)
 	private String cpf;
-	
-	@Version
-	private int versao;
 	
 	public Pessoa(){}
 
@@ -116,4 +109,5 @@ import org.hibernate.validator.constraints.NotBlank;
 	}
 	
 	
+
 }

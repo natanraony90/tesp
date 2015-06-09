@@ -1,11 +1,14 @@
 package br.unibh.escola.entidades;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -24,7 +27,11 @@ import javax.validation.constraints.NotNull;
 	@DecimalMax(value = "50000")
 	@Column(name = "salario", columnDefinition = "Decimal(10,2)")
 	private BigDecimal salario;
+
 	public static Double BONUS = 0.10D;
+	
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="professor")
+	private List<Disciplina> disciplinas;
 
 	public Professor() {
 	}
@@ -54,9 +61,18 @@ import javax.validation.constraints.NotNull;
 		BONUS = bONUS;
 	}
 
+	public List<Disciplina> getDisciplinas() {
+		return disciplinas;
+	}
+
+	public void setDisciplinas(List<Disciplina> disciplinas) {
+		this.disciplinas = disciplinas;
+	}
+
 	@Override
 	public String toString() {
-		return super.toString() + "Professor [salario=" + salario + "]";
+		return "Professor [salario=" + salario + ", disciplinas=" + disciplinas
+				+ "]";
 	}
 
 	@Override
@@ -85,4 +101,5 @@ import javax.validation.constraints.NotNull;
 	}
 	
 	
+
 }

@@ -1,5 +1,6 @@
 package br.unibh.escola.visao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -10,8 +11,14 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
+import br.unibh.escola.entidades.Aluno;
 import br.unibh.escola.entidades.Disciplina;
+import br.unibh.escola.entidades.Professor;
+import br.unibh.escola.entidades.Sala;
+import br.unibh.escola.negocio.ServicoAluno;
 import br.unibh.escola.negocio.ServicoDisciplina;
+import br.unibh.escola.negocio.ServicoProfessor;
+import br.unibh.escola.negocio.ServicoSala;
 
 @ManagedBean(name = "disciplinamb")
 @ViewScoped
@@ -19,15 +26,66 @@ public class ControleDisciplina {
 	@Inject
 	private Logger log;
 	@Inject
-	private ServicoDisciplina sa;
+	private ServicoAluno sa;
+	@Inject
+	private ServicoDisciplina sd;
+	@Inject
+	private ServicoSala ss;
+	@Inject
+	private ServicoProfessor sp;
+
 	private Disciplina disciplina;
 	private String nomeArg;
 	private String cursoArg;
 	private Long id;
 	private List<Disciplina> disciplinas;
 
+	public Logger getLog() {
+		return log;
+	}
+
+	public void setLog(Logger log) {
+		this.log = log;
+	}
+
+	public ServicoAluno getSa() {
+		return sa;
+	}
+
+	public void setSa(ServicoAluno sa) {
+		this.sa = sa;
+	}
+
+	public ServicoDisciplina getSd() {
+		return sd;
+	}
+
+	public void setSd(ServicoDisciplina sd) {
+		this.sd = sd;
+	}
+
+	public ServicoSala getSs() {
+		return ss;
+	}
+
+	public void setSs(ServicoSala ss) {
+		this.ss = ss;
+	}
+
+	public ServicoProfessor getSp() {
+		return sp;
+	}
+
+	public void setSp(ServicoProfessor sp) {
+		this.sp = sp;
+	}
+
 	public Disciplina getDisciplina() {
 		return disciplina;
+	}
+
+	public void setDisciplina(Disciplina disciplina) {
+		this.disciplina = disciplina;
 	}
 
 	public String getNomeArg() {
@@ -36,6 +94,14 @@ public class ControleDisciplina {
 
 	public void setNomeArg(String nomeArg) {
 		this.nomeArg = nomeArg;
+	}
+
+	public String getCursoArg() {
+		return cursoArg;
+	}
+
+	public void setCursoArg(String cursoArg) {
+		this.cursoArg = cursoArg;
 	}
 
 	public Long getId() {
@@ -50,11 +116,15 @@ public class ControleDisciplina {
 		return disciplinas;
 	}
 
+	public void setDisciplinas(List<Disciplina> disciplinas) {
+		this.disciplinas = disciplinas;
+	}
+
 	@PostConstruct
 	public void inicializaLista() {
 		log.info("Executando o MB de Disciplina");
 		try {
-			disciplinas = sa.findAll();
+			disciplinas = sd.findAll();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -64,9 +134,9 @@ public class ControleDisciplina {
 		FacesMessage facesMsg;
 		try {
 			if (disciplina.getId() == null) {
-				disciplina = sa.insert(disciplina);
+				disciplina = sd.insert(disciplina);
 			} else {
-				disciplina = sa.update(disciplina);
+				disciplina = sd.update(disciplina);
 			}
 		} catch (Exception e) {
 			facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro: "
@@ -82,7 +152,7 @@ public class ControleDisciplina {
 
 	public void pesquisar() {
 		try {
-			disciplinas = sa.findByNomeECurso(nomeArg, cursoArg);
+			disciplinas = sd.findByNomeECurso(nomeArg, cursoArg);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -98,7 +168,7 @@ public class ControleDisciplina {
 
 	public void editar() {
 		try {
-			disciplina = sa.find(id);
+			disciplina = sd.find(id);
 			return;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -108,17 +178,17 @@ public class ControleDisciplina {
 
 	public void excluir() {
 		try {
-			sa.delete(sa.find(id));
+			sd.delete(sd.find(id));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		disciplina = null;
 	}
-	
+
 	public String getTipoString(int t) {
 		String result;
 
-		switch(t){
+		switch (t) {
 		case 1:
 			result = "Presencial";
 			break;
@@ -134,5 +204,32 @@ public class ControleDisciplina {
 		}
 
 		return result;
+	}
+
+	public List<Aluno> getAlunos() {
+		try {
+			return sa.findAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<Aluno>();
+	}
+
+	public List<Sala> getSalas() {
+		try {
+			return ss.findAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<Sala>();
+	}
+
+	public List<Professor> getProfessor() {
+		try {
+			return sp.findAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<Professor>();
 	}
 }

@@ -13,7 +13,7 @@ public class ConversorProfessor implements Converter {
 			String value) {
 		try {
 			ServicoProfessor ss = (ServicoProfessor) new InitialContext()
-					.lookup("java:global/escola/ServicoAluno");
+					.lookup("java:global/escola/ServicoProfessor");
 			return ss.find(new Long(value));
 		} catch (Exception e) {
 			e.printStackTrace();

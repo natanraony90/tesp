@@ -44,7 +44,10 @@ public class ServicoDisciplina implements DAO<Disciplina, Long> {
 	@Override
 	public Disciplina find(Long k) throws Exception {
 		log.info("Encontrando Disciplina " + k);
-		return em.find(Disciplina.class, k);
+		Query query = em
+				.createQuery("select d from Disciplina d join fetch d.alunos where d.id = :id" );
+		query.setParameter("id", k);
+		return (Disciplina) query.getSingleResult();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -69,8 +72,8 @@ public class ServicoDisciplina implements DAO<Disciplina, Long> {
 	@Override
 	public List<Disciplina> findByNomeECurso(String nome, String curso) {
 		log.info("Encontrando as salas " + nome + curso);
-		return ((Query) em.createNamedQuery("Disciplina.findByNomeECurso")
-				.setParameter("nome", nome).getResultList())
-				.setParameter("curso", curso).getResultList();				
+		return ((Query) em.createNamedQuery("Disciplina.findByNomeECurso"))
+				.setParameter("nome", nome+"%")
+				.setParameter("curso", curso+"%").getResultList();				
 	}
 }
